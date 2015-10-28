@@ -1,0 +1,2 @@
+src/**/*.unit.spec.js
+src/**/*.e2e.spec.js

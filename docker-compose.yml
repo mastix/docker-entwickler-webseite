@@ -1,0 +1,41 @@
+ubuntubase:
+  container_name: ubuntu-base
+  build: ./ubuntu-base
+meinewebseite:
+  container_name: meinewebseite
+  build: ./meinewebseite
+  expose:
+    - "8081"
+  volumes:
+    - ./logs/:/var/log/nginx/
+    - ./meinewebseite/html:/var/www/html:ro
+meinewebseiteapi:
+  container_name: meinewebseiteapi
+  build: ./meinewebseiteapi
+  expose:
+    - "3001"
+  links:
+    - mongodbdatabase:mongodb
+  volumes:
+    - ./logs/:/var/log/pm2/
+    - ./meinewebseiteapi/app:/var/www/html
+mongodbdatabase:
+  container_name: mongodbdatabase
+  build: ./mongodbdatabase
+  expose:
+    - "3333"
+  volumes:
+    - ./logs/:/var/log/mongodb/
+    - ./mongodbdatabase/db:/data/db
+nginxreverseproxy:
+  container_name: nginx-reverse-proxy
+  build: ./nginx-reverse-proxy
+  expose:
+    - "80"
+  links:
+    - meinewebseite:meinewebseite
+    - meinewebseiteapi:meinewebseiteapi
+  ports:
+    - "80:80"
+  volumes:
+    - ./logs/:/var/log/nginx/

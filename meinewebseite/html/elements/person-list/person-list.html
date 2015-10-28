@@ -1,0 +1,78 @@
+<link rel="import" href="../../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/iron-icons/image-icons.html">
+<link rel="import" href="../person-add-dialog/person-add-dialog.html">
+
+<dom-module id="person-list">
+
+    <template>
+        <style>
+            iron-list {
+                padding-bottom: 16px;
+            }
+
+            .item {
+            @apply(--layout-horizontal);
+
+                margin: 16px 16px 0 16px;
+                padding: 20px;
+
+                border-radius: 8px;
+                background-color: white;
+                border: 1px solid #ddd;
+            }
+
+            .pad {
+                padding: 0 16px;
+            @apply(--layout-flex);
+            @apply(--layout-vertical);
+            }
+
+            .primary {
+                font-size: 16px;
+                font-weight: bold;
+            }
+
+            .secondary {
+                font-size: 14px;
+            }
+
+            .dim {
+                color: gray;
+            }
+
+            paper-icon-button {
+                color: red;
+            }
+        </style>
+
+        <iron-ajax id="getPersons" auto
+                   url="{{url}}"
+                   handle-as="json"
+                   last-response="{{person}}">
+        </iron-ajax>
+        <iron-ajax id="deletePerson"
+                   method="DELETE"
+                   on-response="refresh">
+        </iron-ajax>
+        <person-add-dialog id="add_dialog"></person-add-dialog>
+        <iron-list items="[[person]]" as="item">
+            <template>
+                <div>
+                    <div class="item">
+                        <div class="pad">
+                            <div class="primary"><span>[[item.firstname]]</span> <span>[[item.lastname]]</span></div>
+                            <div class="secondary dim">[[item._id]]</div>
+                        </div>
+                        <paper-icon-button id="[[item._id]]" icon="icons:remove-circle"
+                                           on-click="deletePerson"></paper-icon-button>
+                    </div>
+                </div>
+            </template>
+        </iron-list>
+    </template>
+    <script src="persons-list.js"></script>
+</dom-module>

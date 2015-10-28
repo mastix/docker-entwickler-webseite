@@ -1,0 +1,19 @@
+{
+  "name": "meinewebsite-api",
+  "version": "0.0.1",
+  "description": "REST API fuer meine Webseite. Diese wird vom Webseiten-Container genutzt, um Daten zu lesen, zu löschen und zu speichern.",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mastix/docker-entwickler-webseite.git"
+  },
+  "author": "Sascha Sambale <mastixmc@gmail.com>",
+  "dependencies": {
+    "hapi": "^11.0.2",
+    "mongoose": "^4.2.3"
+  }
+}
